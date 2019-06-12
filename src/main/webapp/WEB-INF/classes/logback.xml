@@ -1,0 +1,42 @@
+<configuration>
+
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- encoders are assigned the type
+         ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
+  
+    <!-- Send debug/info messages to a file-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	    <file>/tmp/camunda.log</file>
+	    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+	    <FileNamePattern>/tmp/camunda.%i.log.zip</FileNamePattern>
+	    <MinIndex>1</MinIndex>
+	    <MaxIndex>10</MaxIndex>
+	    </rollingPolicy>
+	
+	    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+	    	<MaxFileSize>2MB</MaxFileSize>
+	    </triggeringPolicy>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+		</encoder>	    
+    </appender>  
+  
+  <!-- camunda -->
+  <logger name="org.camunda" level="debug" />
+
+  <!-- common dependencies -->
+  <logger name="org.apache.ibatis" level="debug" />
+  <logger name="javax.activation" level="debug" />
+  <logger name="org.springframework" level="debug" />
+
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+   <appender-ref ref="FILE" />
+    
+  </root>
+
+</configuration>
